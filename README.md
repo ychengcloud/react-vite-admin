@@ -16,6 +16,7 @@
 > git clone https://github.com/ychengcloud/react-vite-admin.git
 
 - 安装依赖
+
 > cd react-vite-admin
 
 > yarn install
@@ -53,7 +54,7 @@ Pull Request:
 - [vue-vben-admin](https://github.com/anncwb/vue-vben-admin)
 
 如有遗漏，欢迎指正和补充。
-4
+
 ## 声明
 
 本项目旨在学习采用最新技术栈实现一个后台管理系统，不建议在生产环境下使用，仅供学习参考之用，本人不负责使用本项目产生的任何问题。

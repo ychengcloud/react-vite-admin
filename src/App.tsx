@@ -2,7 +2,7 @@ import React, { Suspense, useEffect, useMemo } from "react";
 import { BrowserRouter } from "react-router-dom";
 import { IntlProvider } from "react-intl";
 
-import { localeConfig } from "@/locales";
+import { localeConfig } from "@/config/locale";
 import { ConfigProvider } from "antd";
 import enUS from "antd/es/locale/en_US";
 import zhCN from "antd/es/locale/zh_CN";
@@ -47,6 +47,15 @@ const App: React.FC = () => {
     }
   };
 
+  const getLocale = () => {
+    const lang = localeConfig.find((item) => {
+      return item.key === locale.toLowerCase();
+    });
+
+    return lang?.messages;
+    
+  }
+
   if (error) {
     setUser({ ...user, logged: false });
     history.push("/login");
@@ -55,7 +64,7 @@ const App: React.FC = () => {
     <ConfigProvider locale={getAntdLocale()} componentSize="middle">
       <IntlProvider
         locale={locale.split("-")[0]}
-        messages={localeConfig[locale.toLowerCase() as Locale]}
+        messages={getLocale()}
       >
         <BrowserRouter>
           <RenderRouter />
