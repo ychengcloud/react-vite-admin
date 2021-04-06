@@ -16,8 +16,8 @@ export const useGetCurrentUser = () => {
       );
 }
 
-export const useGetMenus = () => {
-    return useGetList<MenuList>("MenuList",
+export const useGetCurrentMenus = () => {
+    return useGetList<MenuList>("CurrentMenuList",
         "/current/menu"
     );
 

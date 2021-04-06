@@ -17,8 +17,11 @@
     "jsx": "react",
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]
+      "*": [
+        "node_modules/*"
+      ],
+      "@*": ["src/*"],
     }
   },
-  "include": ["src", "cypress"]
+  "include": ["src", "vite.config.ts", "cypress"]
 }

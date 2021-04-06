@@ -5,6 +5,7 @@ import { viteMockServe } from 'vite-plugin-mock'
 import { resolve } from 'path';
 import svgr from 'vite-plugin-svgr'
 import { getAliases } from "vite-aliases";
+import styleImport from 'vite-plugin-style-import';
 
 const aliases = getAliases();
 
@@ -13,7 +14,7 @@ function pathResolve(dir: string) {
 }
 
 // https://vitejs.dev/config/
-export default ({ command, mode }) => {
+export default ({ command } : { command: string}) => {
   console.log('command:',)
   return {
     resolve: {
@@ -21,7 +22,7 @@ export default ({ command, mode }) => {
       alias: [
         {
           // /@/xxxx  =>  src/xxx
-          find: /~/,
+          find: /^~/,
           replacement: pathResolve('node_modules') + '/',
         },
         {
@@ -31,12 +32,12 @@ export default ({ command, mode }) => {
         },
       ],
     },
-    // optimizeDeps: {
-    //   include: [
-    //     '@ant-design/colors',
-    //     '@ant-design/icons',
-    //   ],
-    // },
+    optimizeDeps: {
+      include: [
+        '@ant-design/colors',
+        '@ant-design/icons',
+      ],
+    },
     // server: {
     //   proxy: {
     //     '/api': {
@@ -56,6 +57,17 @@ export default ({ command, mode }) => {
         localEnabled: command === 'serve',
         logger: true,
       }),
+      // styleImport({
+      //   libs: [
+      //     {
+      //       libraryName: 'antd',
+      //       esModule: true,
+      //       resolveStyle: (name) => {
+      //         return `antd/es/${name}/style/index`;
+      //       },
+      //     },
+      //   ],
+      // }),
     ],
     css: {
       modules: {

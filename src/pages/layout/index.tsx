@@ -3,7 +3,7 @@ import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 import { MenuList, MenuChild } from "@/models/menu.interface";
 import { useGuide } from "../guide/useGuide";
 import { Outlet, useNavigate, useLocation } from "react-router-dom";
-import { useGetMenus } from "@/api";
+import { useGetCurrentMenus } from "@/api";
 import { userState } from "@/stores/user";
 import { useRecoilState } from "recoil";
 
@@ -27,7 +27,7 @@ const IconMap: { [key: string]: React.ReactNode } = {
 };
 
 const LayoutPage: FC = ({ children }) => {
-  const { data: menuList, error } = useGetMenus();
+  const { data: menuList, error } = useGetCurrentMenus();
   
   const [user, setUser] = useRecoilState(userState);
   const [pathname, setPathname] = useState("/welcome");
