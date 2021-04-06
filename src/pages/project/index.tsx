@@ -2,7 +2,7 @@ import { LocaleFormatter, useLocale } from "@/locales";
 import { FooterToolbar, PageContainer } from "@ant-design/pro-layout";
 import type { ProColumns, ActionType } from "@ant-design/pro-table";
 import ProTable from "@ant-design/pro-table";
-import { Button, message, Modal } from "antd";
+import { Button, message, Modal, PaginationProps } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 
 import React, { useEffect, useRef, useState } from "react";
@@ -25,11 +25,11 @@ const TableList= () => {
 
   const [showDetail, setShowDetail] = useState<boolean>(false);
 
-  const [pagination, setPagination] = useState<{}>({
+  const [pagination, setPagination] = useState<Partial<PaginationProps>>({
     current: 1,
     pageSize: 10,
+    total: 0,
   });
-
   const actionRef = useRef<ActionType>();
   const [selectedRowsState, setSelectedRows] = useState<API.Project[]>([]);
 
@@ -50,7 +50,7 @@ const TableList= () => {
 
   useEffect(() => {
     refetch();
-  }, [filters]);
+}, [pagination.current, pagination.pageSize, filters]);
 
   const showModal = () => {
     setVisible(true);
@@ -123,6 +123,7 @@ const TableList= () => {
     if (!selectedRows) return true;
     try {
       await batchDelete(selectedRows.map((row) => row.id));
+      setPagination({...pagination, current: 1});
       hide();
       message.success("删除成功，即将刷新");
       return true;
@@ -213,6 +214,10 @@ const TableList= () => {
         request={undefined}
         dataSource={projects}
         columns={columns}
+        pagination={pagination}
+        onChange={(pagination, filters, sorter) => {
+          setPagination(pagination);
+        }}
         rowSelection={{
           onChange: (_, selectedRows) => {
             setSelectedRows(selectedRows);
