@@ -9,38 +9,48 @@
 - Vite
 - Typescript
 
+## [Document](./README.md)
+
+
+## 截图
+
+![](./screenshot1.png)
+![](./screenshot2.png)
+
+
 ## 安装使用
 
 - 获取项目代码
 
-> git clone https://github.com/ychengcloud/react-vite-admin.git
+```
+ git clone https://github.com/ychengcloud/react-vite-admin.git
+ ```
 
 - 安装依赖
 
-> cd react-vite-admin
+```
+ cd react-vite-admin
+ ```
 
-> yarn install
+```
+ yarn install
+ ```
 
 - 运行
 
-> yarn dev
+```
+ yarn dev
+ ```
 
 - 打包
 
-> yarn build
+```
+ yarn build
+ ```
 
 ## 如何贡献
 
-非常欢迎你的加入！提一个 Issue 或者提交一个 Pull Request。
-
-Pull Request:
-
-1. Fork 代码!
-2. 创建自己的分支: git checkout -b feat/xxxx
-3. 提交你的修改: git commit -am 'feat(function): add xxxxx'
-4. 推送您的分支: git push origin feat/xxxx
-5. 提交pull request
-
+非常欢迎你的加入！提一个 Issue 或者提交一个 Pull Request。[查看如何操作](./contributing.md).
 
 ## 致谢
 
