@@ -4,27 +4,42 @@ This Starter utilizes React, Recoil, React Query, React Hooks, Typescript, Axios
 
 ## [中文文档](./README_ZH.md)
 
+
+## Screenshot
+
+![](./screenshot1.png)
+![](./screenshot2.png)
+
+
 ## Installation
 
 Clone this repo and install all dependencies
 
-> git clone https://github.com/ychengcloud/react-vite-admin.git
+```
+ git clone https://github.com/ychengcloud/react-vite-admin.git
 
-> cd react-vite-admin
+ cd react-vite-admin
 
-> yarn install
+ yarn installv
+```
 
 ## Development
 
-> yarn dev
+``` 
+yarn dev 
+```
 
 ## Build
 
-> yarn build
+```
+yarn build
+```
 
 ## Publish
 
-> yarn dist
+```
+yarn dist
+```
 
 ## Contributing
 
