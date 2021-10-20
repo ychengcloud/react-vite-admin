@@ -20,7 +20,7 @@ Clone this repo and install all dependencies
 
  cd react-vite-admin
 
- yarn installv
+ yarn install
 ```
 
 ## Development
