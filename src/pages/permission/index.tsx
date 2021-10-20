@@ -8,7 +8,8 @@ import { PlusOutlined } from "@ant-design/icons";
 import React, { useEffect, useRef, useState } from "react";
 import { findDOMNode } from "react-dom";
 import OperationModal from "./components/OperationModal";
-import { useBatchDelete, useCreate, useList, useUpdate } from "@/api/request";
+import { useCreate, useUpdate } from "@/api/request";
+import { useBatchDeleteProject, useGetProjects } from "@api";
 
 const TableList= () => {
   const { formatMessage } = useLocale();
@@ -33,16 +34,14 @@ const TableList= () => {
   const actionRef = useRef<ActionType>();
   const [selectedRowsState, setSelectedRows] = useState<API.Project[]>([]);
 
-  const { data, error, isLoading, refetch } = useList<API.ProjectPagination>(
-    "Projects",
-    "/projects",
+  const { data, error, isLoading, refetch } = useGetProjects(
     pagination,
     filters
   );
 
   const { mutateAsync } = useCreate<API.Project, API.Project>("/projects");
   const { mutateAsync: update } = useUpdate<API.Project>("/projects");
-  const { mutateAsync: batchDelete } = useBatchDelete("/projects:batchDelete");
+  const { mutateAsync: batchDelete } = useBatchDeleteProject();
 
   useEffect(() => {
     setProjects(data?.list);

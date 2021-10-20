@@ -38,12 +38,7 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
   };
 
   const onMenuClick = useCallback(
-    (event: {
-      key: React.Key;
-      keyPath: React.Key[];
-      item: React.ReactInstance;
-      domEvent: React.MouseEvent<HTMLElement>;
-    }) => {
+    (event) => {
       const { key } = event;
       if (key === "logout" && user) {
         setUser({ ...user, logged: false });
@@ -77,19 +72,6 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
 
   const menuHeaderDropdown = (
     <Menu className={"menu"} selectedKeys={[]} onClick={onMenuClick}>
-      {menu && (
-        <Menu.Item key="center">
-          <UserOutlined />
-          个人中心
-        </Menu.Item>
-      )}
-      {menu && (
-        <Menu.Item key="settings">
-          <SettingOutlined />
-          个人设置
-        </Menu.Item>
-      )}
-      {menu && <Menu.Divider />}
 
       <Menu.Item key="logout">
         <LogoutOutlined />

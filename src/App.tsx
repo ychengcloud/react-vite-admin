@@ -1,5 +1,5 @@
 import React, { Suspense, useEffect, useMemo } from "react";
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { IntlProvider } from "react-intl";
 
 import { localeConfig } from "@/config/locale";
@@ -17,6 +17,11 @@ import { createBrowserHistory } from "history";
 import { useRecoilState } from "recoil";
 import { userState } from "./stores/user";
 import { Locale } from "./models/user";
+import LayoutPage from "@/pages/layout";
+import Dashboard from "@/pages/dashboard";
+import LoginPage from "@/pages/login";
+import NotFound from "@/pages/404";
+import Project from "@/pages/project";
 
 const history = createBrowserHistory();
 
@@ -53,8 +58,7 @@ const App: React.FC = () => {
     });
 
     return lang?.messages;
-    
-  }
+  };
 
   if (error) {
     setUser({ ...user, logged: false });
@@ -62,12 +66,16 @@ const App: React.FC = () => {
   }
   return (
     <ConfigProvider locale={getAntdLocale()} componentSize="middle">
-      <IntlProvider
-        locale={locale.split("-")[0]}
-        messages={getLocale()}
-      >
+      <IntlProvider locale={locale.split("-")[0]} messages={getLocale()}>
         <BrowserRouter>
-          <RenderRouter />
+          <Routes>
+            <Route path="/" element={<LayoutPage />}>
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/project/list" element={<Project />} />
+              <Route path="*" element={<NotFound />} />
+            </Route>
+            <Route path="/login" element={<LoginPage />} />
+          </Routes>
         </BrowserRouter>
       </IntlProvider>
     </ConfigProvider>
