@@ -16,12 +16,6 @@ import { useGetCurrentUser } from "./api";
 import { createBrowserHistory } from "history";
 import { useRecoilState } from "recoil";
 import { userState } from "./stores/user";
-import { Locale } from "./models/user";
-import LayoutPage from "@/pages/layout";
-import Dashboard from "@/pages/dashboard";
-import LoginPage from "@/pages/login";
-import NotFound from "@/pages/404";
-import Project from "@/pages/project";
 
 const history = createBrowserHistory();
 
@@ -68,14 +62,7 @@ const App: React.FC = () => {
     <ConfigProvider locale={getAntdLocale()} componentSize="middle">
       <IntlProvider locale={locale.split("-")[0]} messages={getLocale()}>
         <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<LayoutPage />}>
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/project/list" element={<Project />} />
-              <Route path="*" element={<NotFound />} />
-            </Route>
-            <Route path="/login" element={<LoginPage />} />
-          </Routes>
+          <RenderRouter />
         </BrowserRouter>
       </IntlProvider>
     </ConfigProvider>

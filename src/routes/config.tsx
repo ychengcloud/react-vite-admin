@@ -9,10 +9,13 @@ export interface WrapperRouteProps extends RouteProps {
   auth?: boolean;
 }
 
-const WrapperRouteComponent: FC<WrapperRouteProps> = ({ auth, ...props }) => {
+const WrapperRouteComponent: FC<WrapperRouteProps> = ({ auth, children }) => {
   const { formatMessage } = useIntl();
-  const WitchRoute = auth ? PrivateRoute : Route;
-  return <WitchRoute {...props} />;
+
+  if (auth) {
+    return <PrivateRoute>{children}</PrivateRoute>;
+  }
+  return <>{children}</>;
 };
 
 export default WrapperRouteComponent;

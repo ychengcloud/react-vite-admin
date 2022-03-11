@@ -1082,11 +1082,6 @@
   resolved "https://registry.nlark.com/@types/estree/download/@types/estree-0.0.39.tgz#e177e699ee1b8c22d23174caaa7422644389509f"
   integrity sha1-4Xfmme4bjCLSMXTKqnQiZEOJUJ8=
 
-"@types/history@*":
-  version "4.7.9"
-  resolved "https://registry.nlark.com/@types/history/download/@types/history-4.7.9.tgz#1cfb6d60ef3822c589f18e70f8b12f9a28ce8724"
-  integrity sha1-HPttYO84IsWJ8Y5w+LEvmijOhyQ=
-
 "@types/hoist-non-react-statics@^3.3.1":
   version "3.3.1"
   resolved "https://registry.nlark.com/@types/hoist-non-react-statics/download/@types/hoist-non-react-statics-3.3.1.tgz#1124aafe5118cb591977aeb1ceaaed1070eb039f"
@@ -1150,23 +1145,6 @@
   resolved "https://registry.npmmirror.com/@types/react-helmet/download/@types/react-helmet-5.0.19.tgz?cache=0&sync_timestamp=1634206250469&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2F%40types%2Freact-helmet%2Fdownload%2F%40types%2Freact-helmet-5.0.19.tgz#e709f192eac0b873693a6f831bb2dbc7085a5c19"
   integrity sha1-5wnxkurAuHNpOm+DG7LbxwhaXBk=
   dependencies:
-    "@types/react" "*"
-
-"@types/react-router-dom@^5.1.7":
-  version "5.3.1"
-  resolved "https://registry.npmmirror.com/@types/react-router-dom/download/@types/react-router-dom-5.3.1.tgz#76700ccce6529413ec723024b71f01fc77a4a980"
-  integrity sha1-dnAMzOZSlBPscjAktx8B/HekqYA=
-  dependencies:
-    "@types/history" "*"
-    "@types/react" "*"
-    "@types/react-router" "*"
-
-"@types/react-router@*":
-  version "5.1.17"
-  resolved "https://registry.npmmirror.com/@types/react-router/download/@types/react-router-5.1.17.tgz#087091006213b11042f39570e5cd414863693968"
-  integrity sha1-CHCRAGITsRBC85Vw5c1BSGNpOWg=
-  dependencies:
-    "@types/history" "*"
     "@types/react" "*"
 
 "@types/react-transition-group@^4.2.3":
@@ -3575,6 +3553,13 @@ history@^5.0.0:
   dependencies:
     "@babel/runtime" "^7.7.6"
 
+history@^5.2.0:
+  version "5.3.0"
+  resolved "https://registry.npmmirror.com/history/-/history-5.3.0.tgz#1548abaa245ba47992f063a0783db91ef201c73b"
+  integrity sha512-ZqaKwjjrAYUYfLG+htGaIIZ4nioX2L70ZUMIFysS3xvBsSG4x/n1V6TXV3N8ZYNuFGlDirFg32T7B6WOUPDYcQ==
+  dependencies:
+    "@babel/runtime" "^7.7.6"
+
 hoist-non-react-statics@^3.3.0, hoist-non-react-statics@^3.3.2:
   version "3.3.2"
   resolved "https://registry.npm.taobao.org/hoist-non-react-statics/download/hoist-non-react-statics-3.3.2.tgz#ece0acaf71d62c2969c2ec59feff42a4b1a85b45"
@@ -5902,17 +5887,20 @@ react-resize-detector@^6.6.3:
     lodash.throttle "^4.1.1"
     resize-observer-polyfill "^1.5.1"
 
-react-router-dom@^6.0.0-beta.0:
-  version "6.0.0-beta.7"
-  resolved "https://registry.npmmirror.com/react-router-dom/download/react-router-dom-6.0.0-beta.7.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2Freact-router-dom%2Fdownload%2Freact-router-dom-6.0.0-beta.7.tgz#896acf6002a57507cccf09ed5cc6cf9d5554e07d"
-  integrity sha1-iWrPYAKldQfMzwntXMbPnVVU4H0=
+react-router-dom@^6.2.2:
+  version "6.2.2"
+  resolved "https://registry.npmmirror.com/react-router-dom/-/react-router-dom-6.2.2.tgz#f1a2c88365593c76b9612ae80154a13fcb72e442"
+  integrity sha512-AtYEsAST7bDD4dLSQHDnk/qxWLJdad5t1HFa1qJyUrCeGgEuCSw0VB/27ARbF9Fi/W5598ujvJOm3ujUCVzuYQ==
   dependencies:
-    react-router "6.0.0-beta.7"
+    history "^5.2.0"
+    react-router "6.2.2"
 
-react-router@6.0.0-beta.7:
-  version "6.0.0-beta.7"
-  resolved "https://registry.npmmirror.com/react-router/download/react-router-6.0.0-beta.7.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2Freact-router%2Fdownload%2Freact-router-6.0.0-beta.7.tgz#8c22236c46977e53696ed779ebec31080ab2d3ee"
-  integrity sha1-jCIjbEaXflNpbtd56+wxCAqy0+4=
+react-router@6.2.2, react-router@^6.2.2:
+  version "6.2.2"
+  resolved "https://registry.npmmirror.com/react-router/-/react-router-6.2.2.tgz#495e683a0c04461eeb3d705fe445d6cf42f0c249"
+  integrity sha512-/MbxyLzd7Q7amp4gDOGaYvXwhEojkJD5BtExkuKmj39VEE0m3l/zipf6h2WIB2jyAO0lI6NGETh4RDcktRm4AQ==
+  dependencies:
+    history "^5.2.0"
 
 react-side-effect@^1.1.0:
   version "1.2.0"

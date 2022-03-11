@@ -3,15 +3,21 @@ import { Route, useNavigate } from 'react-router-dom';
 import { Result, Button } from 'antd';
 import { useLocale } from '@/locales';
 import { RouteProps, useLocation } from 'react-router';
+import { useRecoilState } from 'recoil';
+import { userState } from '@/stores/user';
 
-const PrivateRoute: FC<RouteProps> = props => {
-  const logged = true;
+const PrivateRoute: FC<RouteProps> = ({children}) => {
+  const [user, setUser] = useRecoilState(userState);
+
+  console.log('user: ', user);
+  const logged = user.username? true: false;
+  console.log('username: ', user.username, logged);
   const navigate = useNavigate();
   const { formatMessage } = useLocale();
   const location = useLocation();
 
   return logged ? (
-    <Route {...props} />
+    <div>{children}</div>
   ) : (
     <Result
       status="403"
