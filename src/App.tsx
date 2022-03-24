@@ -23,13 +23,6 @@ const App: React.FC = () => {
   const [user, setUser] = useRecoilState(userState);
   const { locale } = user;
 
-  const { data: currentUser, error } = useGetCurrentUser();
-
-  useEffect(() => {
-    console.log("currentUser: ", currentUser);
-    setUser({ ...user, username: currentUser?.username || "", logged: true });
-  }, [currentUser]);
-
   useEffect(() => {
     if (locale.toLowerCase() === "en-us") {
       moment.locale("en");
@@ -54,10 +47,6 @@ const App: React.FC = () => {
     return lang?.messages;
   };
 
-  if (error) {
-    setUser({ ...user, logged: false });
-    history.push("/login");
-  }
   return (
     <ConfigProvider locale={getAntdLocale()} componentSize="middle">
       <IntlProvider locale={locale.split("-")[0]} messages={getLocale()}>

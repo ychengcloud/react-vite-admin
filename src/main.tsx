@@ -37,7 +37,7 @@ ReactDOM.render(
   <AxiosProvider>
     <QueryClientProvider client={queryClient}>
       <RecoilRoot>
-        <ErrorBoundary
+        {/* <ErrorBoundary
           fallbackRender={({ error, resetErrorBoundary }) => (
             <div>
               There was an error!{" "}
@@ -45,11 +45,11 @@ ReactDOM.render(
               <pre style={{ whiteSpace: "normal" }}>{error.message}</pre>
             </div>
           )}
-        >
+        > */}
           <Suspense fallback={<SuspendFallbackLoading />}>
             <App />
           </Suspense>
-        </ErrorBoundary>
+        {/* </ErrorBoundary> */}
       </RecoilRoot>
     </QueryClientProvider>
   </AxiosProvider>,

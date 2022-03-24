@@ -158,6 +158,7 @@ export default [
   {
     url: '/api/v1/current/user',
     method: 'get',
+    // statusCode: 401,
     response: ({ body }) => {
       return {
         username: 'decker',

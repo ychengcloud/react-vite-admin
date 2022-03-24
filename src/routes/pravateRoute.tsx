@@ -1,12 +1,16 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import { Route, useNavigate } from 'react-router-dom';
 import { Result, Button } from 'antd';
 import { useLocale } from '@/locales';
-import { RouteProps, useLocation } from 'react-router';
+import { Navigate, RouteProps, useLocation } from 'react-router';
 import { useRecoilState } from 'recoil';
 import { userState } from '@/stores/user';
+import { useGetCurrentUser } from '@/api';
+import { createBrowserHistory } from "history";
 
 const PrivateRoute: FC<RouteProps> = ({children}) => {
+const history = createBrowserHistory();
+
   const [user, setUser] = useRecoilState(userState);
 
   console.log('user: ', user);
@@ -16,23 +20,22 @@ const PrivateRoute: FC<RouteProps> = ({children}) => {
   const { formatMessage } = useLocale();
   const location = useLocation();
 
+  const { data: currentUser, error } = useGetCurrentUser();
+
+  useEffect(() => {
+    console.log("currentUser: ", currentUser);
+    setUser({ ...user, username: currentUser?.username || "", logged: true });
+  }, [currentUser]);
+
+  if (error) {
+    setUser({ ...user, logged: false });
+    return <Navigate to="/login" />
+      
+  }
+  
   return logged ? (
     <div>{children}</div>
-  ) : (
-    <Result
-      status="403"
-      title="403"
-      subTitle={formatMessage({ id: 'gloabal.tips.unauthorized' })}
-      extra={
-        <Button
-          type="primary"
-          onClick={() => navigate('/login', { replace: true, state: { from: location.pathname } })}
-        >
-          {formatMessage({ id: 'gloabal.tips.goToLogin' })}
-        </Button>
-      }
-    />
-  );
+  ) : <Navigate to="/login" />
 };
 
 export default PrivateRoute;
