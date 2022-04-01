@@ -1,15 +1,13 @@
-# React + Recoil + React Query + React Hooks + Typescript + Axios + Vite - Starter
+# React + Redux + React Query + React Hooks + Typescript + Axios + Vite - Starter
 
-This Starter utilizes React, Recoil, React Query, React Hooks, Typescript, Axios And Vite.
+This Starter utilizes React, Redux, React Query, React Hooks, Typescript, Axios And Vite.
 
 ## [中文文档](./README_ZH.md)
-
 
 ## Screenshot
 
 ![](./screenshot1.png)
 ![](./screenshot2.png)
-
 
 ## Installation
 
@@ -25,8 +23,8 @@ Clone this repo and install all dependencies
 
 ## Development
 
-``` 
-yarn dev 
+```
+yarn dev
 ```
 
 ## Build

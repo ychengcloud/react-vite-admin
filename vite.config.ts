@@ -1,10 +1,10 @@
-import type { UserConfigExport, ConfigEnv } from 'vite'
+import type { UserConfigExport, ConfigEnv } from 'vite';
 import { loadEnv } from 'vite';
-import reactRefresh from '@vitejs/plugin-react-refresh'
-import { viteMockServe } from 'vite-plugin-mock'
+import reactRefresh from '@vitejs/plugin-react-refresh';
+import { viteMockServe } from 'vite-plugin-mock';
 import { resolve } from 'path';
-import svgr from 'vite-plugin-svgr'
-import { getAliases } from "vite-aliases";
+import svgr from 'vite-plugin-svgr';
+import { getAliases } from 'vite-aliases';
 import styleImport from 'vite-plugin-style-import';
 
 const aliases = getAliases();
@@ -14,8 +14,8 @@ function pathResolve(dir: string) {
 }
 
 // https://vitejs.dev/config/
-export default ({ command } : { command: string}) => {
-  console.log('command:',)
+export default ({ command }: { command: string }) => {
+  console.log('command:');
   return {
     resolve: {
       // alias: aliases,
@@ -33,20 +33,17 @@ export default ({ command } : { command: string}) => {
       ],
     },
     optimizeDeps: {
-      include: [
-        '@ant-design/colors',
-        '@ant-design/icons',
-      ],
+      include: ['@ant-design/colors', '@ant-design/icons'],
     },
-    // server: {
-    //   proxy: {
-    //     '/api': {
-    //       target: 'http://127.0.0.1:7770',
-    //       changeOrigin: true,
-    //       rewrite: path => path.replace(/^\/api/, '')
-    //     }
-    //   },
-    // },
+    server: {
+      proxy: {
+        '/api': {
+          target: 'http://127.0.0.1:8888',
+          changeOrigin: true,
+          rewrite: (path: string) => path.replace(/^\/api/, ''),
+        },
+      },
+    },
     plugins: [
       reactRefresh(),
       svgr(),
@@ -82,6 +79,5 @@ export default ({ command } : { command: string}) => {
         },
       },
     },
-  }
-}
-
+  };
+};

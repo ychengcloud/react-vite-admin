@@ -10,7 +10,6 @@ export interface CurrentUserResult {
   role: Role;
 }
 
-
 export interface User {
   username: string;
 
@@ -39,4 +38,7 @@ export interface User {
 
   settings: PureSettings;
   avatar: string;
+  modalStatus: Record<string, boolean>;
+  refresh: boolean;
+  tableSelectData: Record<string, any>;
 }

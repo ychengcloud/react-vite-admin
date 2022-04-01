@@ -1,10 +1,6 @@
-import {
-    atom,
-    selector,
-} from 'recoil';
-
+import { atom, selector } from 'recoil';
 
 export const menuListState = atom({
-    key: 'menuListState',
-    default: [],
+  key: 'menuListState',
+  default: [],
 });

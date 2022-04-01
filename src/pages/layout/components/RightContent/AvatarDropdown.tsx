@@ -1,26 +1,24 @@
-import React, { useCallback } from "react";
-import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import React, { useCallback } from 'react';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 
 import {
   LogoutOutlined,
   SettingOutlined,
   UserOutlined,
-} from "@ant-design/icons";
-import { Avatar, Menu, Spin } from "antd";
-
-import HeaderDropdown from "../HeaderDropdown";
-import classes from "./index.module.less";
-import { useRecoilState } from "recoil";
-import { userState } from "@/stores/user";
+} from '@ant-design/icons';
+import { Avatar, Menu, Spin } from 'antd';
+import HeaderDropdown from '../HeaderDropdown';
+import classes from './index.module.less';
+import { shallowEqual, useSelector } from 'react-redux';
+import { RootState } from '../../../../stores';
+import useUserRedux from '../../index.redux';
 
 export type GlobalHeaderRightProps = {
   menu?: boolean;
 };
 
 const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
-  const [user, setUser] = useRecoilState(userState);
-
-  const { username, avatar } = user;
+  const { username, avatar } = useUserRedux();
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -30,25 +28,25 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
    */
   const loginOut = async () => {
     // Note: There may be security issues, please note
-    if (location.pathname !== "/login") {
-      navigate("/login", {
+    if (location.pathname !== '/login') {
+      navigate('/login', {
         replace: true,
       });
     }
   };
 
-  const onMenuClick = useCallback(
-    (event) => {
-      const { key } = event;
-      if (key === "logout" && user) {
-        setUser({ ...user, logged: false });
-        loginOut();
-        return;
-      }
-      navigate(`/account/${key}`);
-    },
-    [user, setUser]
-  );
+  // const onMenuClick = useCallback(
+  //   (event) => {
+  //     const { key } = event;
+  //     if (key === 'logout' && user) {
+  //       setUser({ ...user, logged: false });
+  //       loginOut();
+  //       return;
+  //     }
+  //     navigate(`/account/${key}`);
+  //   },
+  //   [user, setUser]
+  // );
 
   const loading = (
     <span className={`account`}>
@@ -62,17 +60,16 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
     </span>
   );
 
-  if (!user) {
-    return loading;
-  }
+  // if (!user) {
+  //   return loading;
+  // }
 
-  if (!username) {
-    return loading;
-  }
+  // if (!username) {
+  //   return loading;
+  // }
 
   const menuHeaderDropdown = (
-    <Menu className={"menu"} selectedKeys={[]} onClick={onMenuClick}>
-
+    <Menu className={'menu'} selectedKeys={[]}>
       <Menu.Item key="logout">
         <LogoutOutlined />
         退出登录

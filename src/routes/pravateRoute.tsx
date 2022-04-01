@@ -3,15 +3,14 @@ import { Route, useNavigate } from 'react-router-dom';
 import { Result, Button } from 'antd';
 import { useLocale } from '@/locales';
 import { RouteProps, useLocation } from 'react-router';
-import { useRecoilState } from 'recoil';
-import { userState } from '@/stores/user';
+import useUserRedux from '../pages/layout/index.redux';
 
-const PrivateRoute: FC<RouteProps> = ({children}) => {
-  const [user, setUser] = useRecoilState(userState);
+const PrivateRoute: FC<RouteProps> = ({ children }) => {
+  const { username } = useUserRedux();
 
-  console.log('user: ', user);
-  const logged = user.username? true: false;
-  console.log('username: ', user.username, logged);
+  console.log('user: ', username);
+  const logged = username ? true : false;
+  console.log('username: ', username, logged);
   const navigate = useNavigate();
   const { formatMessage } = useLocale();
   const location = useLocation();
@@ -26,7 +25,12 @@ const PrivateRoute: FC<RouteProps> = ({children}) => {
       extra={
         <Button
           type="primary"
-          onClick={() => navigate('/login', { replace: true, state: { from: location.pathname } })}
+          onClick={() =>
+            navigate('/login', {
+              replace: true,
+              state: { from: location.pathname },
+            })
+          }
         >
           {formatMessage({ id: 'gloabal.tips.goToLogin' })}
         </Button>

@@ -1,34 +1,30 @@
-import { Tag, Space, Menu } from "antd";
-import { QuestionCircleOutlined } from "@ant-design/icons";
-import React from "react";
+import { Tag, Space, Menu } from 'antd';
+import { QuestionCircleOutlined } from '@ant-design/icons';
+import React from 'react';
 
-import Avatar from "./AvatarDropdown";
-import HeaderDropdown from "../HeaderDropdown";
-import HeaderSearch from "../HeaderSearch";
-// import "./index.less";
-import classes from "./index.module.less";
-import { useRecoilState } from "recoil";
-import { userState } from "@/stores/user";
-import SelectLang from "./SelectLang";
+import Avatar from './AvatarDropdown';
+import HeaderDropdown from '../HeaderDropdown';
+import HeaderSearch from '../HeaderSearch';
+import classes from './index.module.less';
+import SelectLang from './SelectLang';
 import { ReactComponent as LanguageSvg } from '@/assets/header/language.svg';
+import useUserRedux from '../../index.redux';
 
-export type SiderTheme = "light" | "dark";
+export type SiderTheme = 'light' | 'dark';
 
 const ENVTagColor = {
-  dev: "orange",
-  test: "green",
-  pre: "#87d068",
+  dev: 'orange',
+  test: 'green',
+  pre: '#87d068',
 };
 
 const GlobalHeaderRight: React.FC = () => {
-  const [user, setUser] = useRecoilState(userState);
-
-  const { settings } = user;
+  const { settings } = useUserRedux();
   let className = classes.right;
 
   if (
-    (settings.navTheme === "dark" && settings.layout === "top") ||
-    settings.layout === "mix"
+    (settings.navTheme === 'dark' && settings.layout === 'top') ||
+    settings.layout === 'mix'
   ) {
     className = `${classes.right} ${classes.dark}`;
   }
@@ -41,36 +37,35 @@ const GlobalHeaderRight: React.FC = () => {
         options={[
           {
             label: <a href="next.ant.design">Ant Design</a>,
-            value: "Ant Design",
+            value: 'Ant Design',
           },
           {
             label: <a href="https://protable.ant.design/">Pro Table</a>,
-            value: "Pro Table",
+            value: 'Pro Table',
           },
           {
             label: <a href="https://prolayout.ant.design/">Pro Layout</a>,
-            value: "Pro Layout",
+            value: 'Pro Layout',
           },
         ]}
-        onSearch={value => {
+        onSearch={(value) => {
           console.log('input', value);
         }}
       />
       <HeaderDropdown
-      className={classes.action}
-
+        className={classes.action}
         overlay={
           <Menu>
             <Menu.Item
               onClick={() => {
-                window.open("/~docs");
+                window.open('/~docs');
               }}
             >
               文档
             </Menu.Item>
             <Menu.Item
               onClick={() => {
-                window.open("https://pro.ant.design/docs/getting-started");
+                window.open('https://pro.ant.design/docs/getting-started');
               }}
             >
               Ant Design Pro 文档

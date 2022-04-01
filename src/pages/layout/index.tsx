@@ -1,22 +1,20 @@
-import React, { FC, useEffect, Suspense, useCallback, useState } from "react";
-import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
-import { MenuList, MenuChild } from "@/models/menu.interface";
-import { useGuide } from "../guide/useGuide";
-import { Outlet, useNavigate, useLocation } from "react-router-dom";
-import { useGetCurrentMenus } from "@/api";
-import { userState } from "@/stores/user";
-import { useRecoilState } from "recoil";
-
-import type { MenuDataItem } from "@ant-design/pro-layout";
-import ProLayout from "@ant-design/pro-layout";
-import { SmileOutlined, HeartOutlined, FrownOutlined } from "@ant-design/icons";
-import { Link } from "react-router-dom";
-import { useLocale } from "@/locales";
-import { createBrowserHistory } from "history";
-import RightContent from "./components/RightContent";
-import { ReactComponent as LogoSvg } from "@/assets/logo/react.svg";
-import styles from "./index.module.less";
-import Footer from "./components/Footer";
+import React, { FC, useEffect, Suspense, useCallback, useState } from 'react';
+import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
+import { MenuList, MenuChild } from '@/models/menu.interface';
+import { useGuide } from '../guide/useGuide';
+import { Outlet, useNavigate, useLocation } from 'react-router-dom';
+import { useGetCurrentMenus } from '@/api';
+import type { MenuDataItem } from '@ant-design/pro-layout';
+import ProLayout from '@ant-design/pro-layout';
+import { SmileOutlined, HeartOutlined, FrownOutlined } from '@ant-design/icons';
+import { Link } from 'react-router-dom';
+import { useLocale } from '@/locales';
+import { createBrowserHistory } from 'history';
+import RightContent from './components/RightContent';
+import { ReactComponent as LogoSvg } from '@/assets/logo/react.svg';
+import styles from './index.module.less';
+import Footer from './components/Footer';
+import useUserRedux from './index.redux';
 
 const history = createBrowserHistory();
 
@@ -28,24 +26,24 @@ const IconMap: { [key: string]: React.ReactNode } = {
 
 const LayoutPage: FC = ({ children }) => {
   const { data: menuList, error } = useGetCurrentMenus();
-  
-  const [user, setUser] = useRecoilState(userState);
-  const [pathname, setPathname] = useState("/welcome");
-  const { device, collapsed, newUser, settings } = user;
-  const isMobile = device === "MOBILE";
+
+  const [pathname, setPathname] = useState('/welcome');
+  const { device, collapsed, newUser, settings, changeCollapsed } =
+    useUserRedux();
+  const isMobile = device === 'MOBILE';
   const { driverStart } = useGuide();
   const location = useLocation();
   const navigate = useNavigate();
   const { formatMessage } = useLocale();
 
   useEffect(() => {
-    if (location.pathname === "/") {
-      navigate("/dashboard");
+    if (location.pathname === '/') {
+      navigate('/dashboard');
     }
   }, [navigate, location]);
 
   const toggle = () => {
-    setUser({ ...user, collapsed: !collapsed });
+    changeCollapsed();
   };
 
   const initMenuListAll = (menu: MenuList) => {
@@ -64,7 +62,6 @@ const LayoutPage: FC = ({ children }) => {
 
   useEffect(() => {
     newUser && driverStart();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [newUser]);
 
   const loopMenuItem = (menus?: MenuDataItem[]): MenuDataItem[] => {
@@ -89,12 +86,10 @@ const LayoutPage: FC = ({ children }) => {
       {...settings}
       onCollapse={toggle}
       formatMessage={formatMessage}
-      onMenuHeaderClick={() => history.push("https://reactjs.org/")}
+      onMenuHeaderClick={() => history.push('https://reactjs.org/')}
       headerTitleRender={(logo, title, props) => (
-        <a
-          className={styles.layoutPageHeader}
-        >
-          <LogoSvg  />
+        <a className={styles.layoutPageHeader}>
+          <LogoSvg />
           {title}
         </a>
       )}
@@ -112,15 +107,15 @@ const LayoutPage: FC = ({ children }) => {
       }}
       breadcrumbRender={(routers = []) => [
         {
-          path: "/",
-          breadcrumbName: formatMessage({ id: "menu.home" }),
+          path: '/',
+          breadcrumbName: formatMessage({ id: 'menu.home' }),
         },
         ...routers,
       ]}
       itemRender={(route, params, routes, paths) => {
         const first = routes.indexOf(route) === 0;
         return first ? (
-          <Link to={paths.join("/")}>{route.breadcrumbName}</Link>
+          <Link to={paths.join('/')}>{route.breadcrumbName}</Link>
         ) : (
           <span>{route.breadcrumbName}</span>
         );
@@ -134,8 +129,8 @@ const LayoutPage: FC = ({ children }) => {
           <div
             onClick={() => toggle}
             style={{
-              cursor: "pointer",
-              fontSize: "16px",
+              cursor: 'pointer',
+              fontSize: '16px',
             }}
           >
             <span id="sidebar-trigger">

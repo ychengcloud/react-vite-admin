@@ -1,14 +1,15 @@
-import React from "react";
-import { Menu } from "antd";
-import { ReactComponent as ZhCnSvg } from "@/assets/header/zh_CN.svg";
-import { ReactComponent as EnUsSvg } from "@/assets/header/en_US.svg";
-import { ReactComponent as LanguageSvg } from "@/assets/header/language.svg";
-import classes from "./index.module.less";
-import { localeConfig } from "@/config/locale";
-import { useLocale } from "@/locales";
-import { useRecoilState } from "recoil";
-import { userState } from "@/stores/user";
-import HeaderDropdown from "../HeaderDropdown";
+import React from 'react';
+import { Menu } from 'antd';
+import { ReactComponent as ZhCnSvg } from '@/assets/header/zh_CN.svg';
+import { ReactComponent as EnUsSvg } from '@/assets/header/en_US.svg';
+import { ReactComponent as LanguageSvg } from '@/assets/header/language.svg';
+import classes from './index.module.less';
+import { localeConfig } from '@/config/locale';
+import { useLocale } from '@/locales';
+import HeaderDropdown from '../HeaderDropdown';
+import { shallowEqual, useSelector } from 'react-redux';
+import { RootState } from '../../../../stores';
+import useUserRedux from '../../index.redux';
 
 interface SelectLangProps {
   className?: string;
@@ -18,19 +19,17 @@ const SelectLang: React.FC<SelectLangProps> = (props) => {
   const { ...restProps } = props;
 
   const { formatMessage } = useLocale();
-  const [user, setUser] = useRecoilState(userState);
-
-  const { locale, settings } = user;
-  let className = "";
+  const { locale, settings } = useUserRedux();
+  let className = '';
 
   const selectLocale = ({ key }: { key: any }) => {
-    setUser({ ...user, locale: key });
-    localStorage.setItem("locale", key);
+    // setUser({ ...user, locale: key });
+    localStorage.setItem('locale', key);
   };
 
   if (
-    (settings.navTheme === "dark" && settings.layout === "top") ||
-    settings.layout === "mix"
+    (settings.navTheme === 'dark' && settings.layout === 'top') ||
+    settings.layout === 'mix'
   ) {
     className = `dark`;
   }
@@ -41,7 +40,7 @@ const SelectLang: React.FC<SelectLangProps> = (props) => {
         {localeConfig.map((lang) => {
           return (
             <Menu.Item
-              style={{ textAlign: "left" }}
+              style={{ textAlign: 'left' }}
               disabled={locale.toLowerCase() === lang.key}
               key={lang.key}
             >

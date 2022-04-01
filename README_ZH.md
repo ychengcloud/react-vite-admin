@@ -3,7 +3,7 @@
 全新技术栈的后台管理系统
 
 - React
-- Recoil
+- React-redux
 - React Query
 - React Hooks
 - Vite
@@ -11,12 +11,10 @@
 
 ## [Document](./README.md)
 
-
 ## 截图
 
 ![](./screenshot1.png)
 ![](./screenshot2.png)
-
 
 ## 安装使用
 
@@ -24,29 +22,29 @@
 
 ```
  git clone https://github.com/ychengcloud/react-vite-admin.git
- ```
+```
 
 - 安装依赖
 
 ```
  cd react-vite-admin
- ```
+```
 
 ```
  yarn install
- ```
+```
 
 - 运行
 
 ```
  yarn dev
- ```
+```
 
 - 打包
 
 ```
  yarn build
- ```
+```
 
 ## 如何贡献
 
