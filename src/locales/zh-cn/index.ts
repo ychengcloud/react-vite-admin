@@ -21,7 +21,7 @@ const zh_CN = {
   ...zhCN_guide,
   ...zhCN_menu,
   ...zhCN_project,
-  ...zhCN_documentation
+  ...zhCN_documentation,
 };
 
 export default zh_CN;

@@ -8,8 +8,11 @@ import { IUser, tableHeaderColumns } from './tableHeader';
 import useModalState from './components/Modal/AddUser/index.hooks';
 import { useDelete } from '../../api/request';
 import UserModal from './components/Modal';
+import { EDIT_USER } from './components/Modal/EditUser';
 const User = () => {
-  const { refresh, refreshTable, setModalStatus } = useModalState('add_user');
+  const { refresh, setModalStatus, setSelectTableData } =
+    useModalState('add_user');
+  const { setModalStatus: setEditUserModalStatus } = useModalState(EDIT_USER);
   const actionRef = useRef<ActionType>();
   const mutation = useDelete('v1/user/delete');
   const getTableData = async (params: any, sort: any, filter: any) => {
@@ -40,7 +43,7 @@ const User = () => {
     setModalStatus(true);
   };
   useEffect(() => {
-    refreshTable();
+    refreshTableFun();
   }, [refresh]);
 
   const deleteUser = async (record: any) => {
@@ -51,15 +54,9 @@ const User = () => {
     refreshTableFun();
   };
   const editUser = (record: IUser) => {
-    // setUserStatus((oldStatus) => {
-    //   return {
-    //     ...oldStatus,
-    //     modalStatus: {
-    //       edit_user: true,
-    //     },
-    //     tableSelectData: record,
-    //   };
-    // });
+    console.log(record);
+    setEditUserModalStatus(true);
+    setSelectTableData(record);
   };
 
   return (
@@ -68,6 +65,7 @@ const User = () => {
         columns={tableHeaderColumns(editUser, deleteUser)}
         request={getTableData}
         actionRef={actionRef}
+        headerTitle={'用户列表'}
         toolBarRender={() => [
           <Button
             key="addUserButton"

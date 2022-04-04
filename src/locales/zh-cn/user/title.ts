@@ -7,7 +7,6 @@ export const zhCN_title = {
   'title.permission.button': '按钮权限',
   'title.permission.config': '权限配置',
   'title.account': '个人设置',
-  'title.project': '项目管理',
+  'title.project': '图书管理项目项目',
   'title.notFount': '404',
-  
 };

@@ -3,6 +3,7 @@ import { LoginParams, Role } from '@/models/login';
 import { Locale, User } from '@/models/user';
 import { getGlobalState } from '@/models';
 import { ModalState } from '../types';
+import { IUser } from '../pages/user/tableHeader';
 
 const initialState: User = {
   ...getGlobalState(),
@@ -42,6 +43,18 @@ const user = createSlice({
     toggleCollapsed: (state) => {
       state.collapsed = !state.collapsed;
     },
+    setLocal: (state, action) => {
+      state.locale = action.payload;
+    },
+    setLogged: (state, action: PayloadAction<boolean>) => {
+      state.logged = action.payload;
+    },
+    setTableSelectDataRedux: (state, action: PayloadAction<IUser>) => {
+      state.tableSelectData = action.payload;
+    },
+    changeLocalRedux: (state, action: PayloadAction<Locale>) => {
+      state.locale = action.payload;
+    },
   },
 });
 
@@ -50,5 +63,9 @@ export const {
   updateModalState,
   refreshTable,
   toggleCollapsed,
+  setLocal,
+  setLogged,
+  setTableSelectDataRedux,
+  changeLocalRedux,
 } = user.actions;
 export default user.reducer;

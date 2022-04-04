@@ -20,7 +20,7 @@ export const useLogin = () => {
 // };
 
 export const useGetCurrentMenus = () => {
-  return useGetList<MenuList>('/login', '/current/menu');
+  return useGetList<MenuList>('currentMenu', '/current/menu');
 };
 export const useGetProjects = (pagination: any, filters: any) => {
   return useGetList<API.ProjectPagination>(

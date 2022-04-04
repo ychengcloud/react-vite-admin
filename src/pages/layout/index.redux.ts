@@ -1,7 +1,7 @@
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../stores';
-import { toggleCollapsed } from '../../stores/user';
-
+import { toggleCollapsed, changeLocalRedux } from '../../stores/user';
+import { Locale, User } from '@/models/user';
 const useUserRedux = (): {
   [key: string]: any;
   changeCollapsed: () => void;
@@ -22,9 +22,13 @@ const useUserRedux = (): {
   const changeCollapsed = () => {
     dispatch(toggleCollapsed());
   };
+  const changeLocal = (locale: Locale) => {
+    dispatch(changeLocalRedux(locale));
+  };
   return {
     ...reduxStatus,
     changeCollapsed,
+    changeLocal,
   };
 };
 export default useUserRedux;

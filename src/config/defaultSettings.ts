@@ -12,7 +12,7 @@ const Settings: LayoutSettings & {
   fixedHeader: false,
   fixSiderbar: true,
   colorWeak: false,
-  title: '项目管理',
+  title: '图书管理项目',
   pwa: false,
   iconfontUrl: '',
 };

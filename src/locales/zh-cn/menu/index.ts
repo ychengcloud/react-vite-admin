@@ -7,4 +7,5 @@ export const zhCN_menu = {
   'menu.permission.list': '权限列表',
   'menu.notfound': '404',
   'menu.user': '用户设置',
+  'menu.role': '角色设置',
 };

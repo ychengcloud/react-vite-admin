@@ -8,6 +8,8 @@ import { http } from '../../enum/httpStatus';
 import styles from './index.module.less';
 import { ReactComponent as LogoSvg } from '@/assets/logo/logo.svg';
 import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { setLogged } from '../../stores/user';
 
 const initialValues: LoginParams = {
   user_name: 'guest',
@@ -16,16 +18,20 @@ const initialValues: LoginParams = {
 };
 
 const LoginForm: FC = () => {
+  const dispatch = useDispatch();
   const loginMutation = useLogin();
   const navigate = useNavigate();
-  const location = useLocation() as Location<{ from: string }>;
+  const location = useLocation();
 
   const onFinished = async (form: LoginParams) => {
-    console.log(form);
     const result = await loginMutation.mutateAsync(form);
     if (result.statue === http.statusOK) {
       localStorage.setItem('token', result.data.token ?? '');
-      const from = location.state?.from || { pathname: '/user' };
+      localStorage.setItem('username', form.user_name);
+      dispatch(setLogged(true));
+      const from = (location.state as { from: string })?.from || {
+        pathname: '/user',
+      };
       navigate(from);
     } else {
       message.error(result.errorMessage);

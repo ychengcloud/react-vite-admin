@@ -19,6 +19,6 @@ export const useLocale = () => {
   const formatMessage: FormatMessageProps = _formatMessage;
   return {
     ...rest,
-    formatMessage
+    formatMessage,
   };
 };

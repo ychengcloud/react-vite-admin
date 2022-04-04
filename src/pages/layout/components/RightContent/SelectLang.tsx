@@ -19,12 +19,12 @@ const SelectLang: React.FC<SelectLangProps> = (props) => {
   const { ...restProps } = props;
 
   const { formatMessage } = useLocale();
-  const { locale, settings } = useUserRedux();
+  const { locale, settings, changeLocal } = useUserRedux();
   let className = '';
 
   const selectLocale = ({ key }: { key: any }) => {
-    // setUser({ ...user, locale: key });
     localStorage.setItem('locale', key);
+    changeLocal(key);
   };
 
   if (

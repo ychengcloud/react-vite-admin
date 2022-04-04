@@ -3,6 +3,7 @@ import { RootState } from '../../../../../stores';
 import {
   updateModalState,
   refreshTable as refresh,
+  setTableSelectDataRedux,
 } from '../../../../../stores/user';
 import { IUser } from '../../../tableHeader';
 
@@ -13,6 +14,8 @@ const useModalState = (
   refresh: boolean;
   setModalStatus: (status: boolean) => void;
   refreshTable: () => void;
+  tableSelectData: IUser;
+  setSelectTableData: (data: IUser) => void;
 } => {
   const reduxState = useSelector((state: RootState) => {
     return {
@@ -27,6 +30,10 @@ const useModalState = (
     dispatch(updateModalState({ btnId: modalName, status }));
   };
 
+  const setSelectTableData = (data: IUser) => {
+    dispatch(setTableSelectDataRedux(data));
+  };
+
   const refreshTable = () => {
     dispatch(refresh());
   };
@@ -34,6 +41,7 @@ const useModalState = (
     ...reduxState,
     refreshTable,
     setModalStatus,
+    setSelectTableData,
   };
 };
 export default useModalState;

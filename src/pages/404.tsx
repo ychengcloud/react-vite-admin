@@ -10,10 +10,10 @@ const NotFoundPage: React.FC<{}> = () => {
     <Result
       status="404"
       title="404"
-      subTitle={formatMessage({ id: 'gloabal.tips.notfound' })}
+      subTitle={formatMessage({ id: 'global.tips.notfound' })}
       extra={
         <Button type="primary" onClick={() => navigate('/')}>
-          {formatMessage({ id: 'gloabal.tips.backHome' })}
+          {formatMessage({ id: 'global.tips.backHome' })}
         </Button>
       }
     ></Result>

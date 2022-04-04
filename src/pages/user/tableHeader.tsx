@@ -33,7 +33,7 @@ export const tableHeaderColumns = (
     },
     {
       title: '角色',
-      dataIndex: 'role',
+      dataIndex: 'roleName',
     },
     {
       title: '性别',
@@ -78,7 +78,12 @@ export const tableHeaderColumns = (
       key: 'option',
       valueType: 'option',
       render: (_: ReactNode, record: IUser) => [
-        <Button key="link" type="primary" onClick={() => edit(record)}>
+        <Button
+          key="link"
+          type="primary"
+          onClick={() => edit(record)}
+          disabled={record.id === 1}
+        >
           编辑
         </Button>,
         <Popconfirm

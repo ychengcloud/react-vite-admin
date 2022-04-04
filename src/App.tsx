@@ -10,9 +10,9 @@ import 'moment/locale/zh-cn';
 import RenderRouter from './routes';
 import './App.less';
 // import { useGetCurrentUser } from "./api";
-
+import useUserRedux from './pages/layout/index.redux';
 const App: React.FC = () => {
-  const locale = '';
+  const { locale } = useUserRedux();
   // const { data: currentUser, error } = useGetCurrentUser();
   // useEffect(() => {
   //   console.log('currentUser: ', currentUser);
@@ -47,6 +47,7 @@ const App: React.FC = () => {
   //   setUser({ ...user, logged: false });
   //   history.push('/login');
   // }
+
   return (
     <ConfigProvider locale={getAntdLocale()} componentSize="middle">
       <IntlProvider locale={locale.split('-')[0]} messages={getLocale()}>

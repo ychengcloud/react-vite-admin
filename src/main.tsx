@@ -57,6 +57,6 @@ ReactDOM.render(
       </Provider>
     </QueryClientProvider>
   </AxiosProvider>,
-  // </React.StrictMode>,
+  // {/* </React.StrictMode> */}，
   document.getElementById('root')
 );

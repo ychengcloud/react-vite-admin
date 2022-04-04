@@ -1,16 +1,21 @@
-import { LocaleFormatter, useLocale } from "@/locales";
-import { FooterToolbar, PageContainer } from "@ant-design/pro-layout";
-import type { ProColumns, ActionType } from "@ant-design/pro-table";
-import ProTable from "@ant-design/pro-table";
-import { Button, message, Modal, PaginationProps } from "antd";
-import { PlusOutlined } from "@ant-design/icons";
+import { LocaleFormatter, useLocale } from '@/locales';
+import { FooterToolbar, PageContainer } from '@ant-design/pro-layout';
+import type { ProColumns, ActionType } from '@ant-design/pro-table';
+import ProTable from '@ant-design/pro-table';
+import { Button, message, Modal, PaginationProps } from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
 
-import React, { useEffect, useRef, useState } from "react";
-import { findDOMNode } from "react-dom";
-import OperationModal from "./components/OperationModal";
-import { useAddProject, useBatchDeleteProject, useGetProjects, useUpdateProject } from "@/api";
+import React, { useEffect, useRef, useState } from 'react';
+import { findDOMNode } from 'react-dom';
+import OperationModal from './components/OperationModal';
+import {
+  useAddProject,
+  useBatchDeleteProject,
+  useGetProjects,
+  useUpdateProject,
+} from '@/api';
 
-const TableList= () => {
+const TableList = () => {
   const { formatMessage } = useLocale();
 
   const addBtn = useRef(null);
@@ -33,7 +38,10 @@ const TableList= () => {
   const actionRef = useRef<ActionType>();
   const [selectedRowsState, setSelectedRows] = useState<API.Project[]>([]);
 
-  const { data, error, isLoading, refetch } = useGetProjects(pagination, filters);
+  const { data, error, isLoading, refetch } = useGetProjects(
+    pagination,
+    filters
+  );
 
   const { mutateAsync } = useAddProject();
   const { mutateAsync: update } = useUpdateProject();
@@ -50,7 +58,7 @@ const TableList= () => {
 
   useEffect(() => {
     refetch();
-}, [pagination.current, pagination.pageSize, filters]);
+  }, [pagination.current, pagination.pageSize, filters]);
 
   const showModal = () => {
     setVisible(true);
@@ -93,7 +101,7 @@ const TableList= () => {
     setAddBtnblur();
     setVisible(false);
 
-    const hide = message.loading("正在添加/更新");
+    const hide = message.loading('正在添加/更新');
     try {
       if (values.id === 0) {
         await addProject(values);
@@ -103,13 +111,13 @@ const TableList= () => {
 
       hide();
 
-      message.success("操作成功");
+      message.success('操作成功');
       refetch();
 
       return true;
     } catch (error) {
       hide();
-      message.error("操作失败请重试！");
+      message.error('操作失败请重试！');
       return false;
     }
   };
@@ -119,26 +127,26 @@ const TableList= () => {
    * @param selectedRows
    */
   const handleRemove = async (selectedRows: API.Project[]) => {
-    const hide = message.loading("正在删除");
+    const hide = message.loading('正在删除');
     if (!selectedRows) return true;
     try {
       await batchDelete(selectedRows.map((row) => row.id));
-      setPagination({...pagination, current: 1});
+      setPagination({ ...pagination, current: 1 });
       hide();
-      message.success("删除成功，即将刷新");
+      message.success('删除成功，即将刷新');
       return true;
     } catch (error) {
       hide();
-      message.error("删除失败，请重试");
+      message.error('删除失败，请重试');
       return false;
     }
   };
 
   const columns: ProColumns<API.Project>[] = [
     {
-      title: formatMessage({ id: "app.project.name" }),
-      dataIndex: "name",
-      tip: "项目名称是唯一的 key",
+      title: formatMessage({ id: 'app.project.name' }),
+      dataIndex: 'name',
+      tip: '项目名称是唯一的 key',
       sorter: true,
       render: (dom, entity) => {
         return (
@@ -154,15 +162,15 @@ const TableList= () => {
       },
     },
     {
-      title: formatMessage({ id: "app.project.description" }),
-      dataIndex: "description",
-      valueType: "textarea",
+      title: formatMessage({ id: 'app.project.description' }),
+      dataIndex: 'description',
+      valueType: 'textarea',
       sorter: true,
     },
     {
-      title: formatMessage({ id: "gloabal.tips.operation" }),
-      dataIndex: "option",
-      valueType: "option",
+      title: formatMessage({ id: 'global.tips.operation' }),
+      dataIndex: 'option',
+      valueType: 'option',
       render: (_, record) => [
         <a
           key="edit"
@@ -171,17 +179,17 @@ const TableList= () => {
             showEditModal(record);
           }}
         >
-          {formatMessage({ id: "gloabal.tips.modify" })}
+          {formatMessage({ id: 'global.tips.modify' })}
         </a>,
         <a
           key="delete"
           onClick={(e) => {
             e.preventDefault();
             Modal.confirm({
-              title: "删除項目",
-              content: "确定删除该項目吗？",
-              okText: "确认",
-              cancelText: "取消",
+              title: '删除項目',
+              content: '确定删除该項目吗？',
+              okText: '确认',
+              cancelText: '取消',
               onOk: async () => {
                 await handleRemove([{ ...record }]);
                 setSelectedRows([]);
@@ -190,7 +198,7 @@ const TableList= () => {
             });
           }}
         >
-          {formatMessage({ id: "gloabal.tips.delete" })}
+          {formatMessage({ id: 'global.tips.delete' })}
         </a>,
       ],
     },
@@ -200,15 +208,15 @@ const TableList= () => {
     <PageContainer>
       <ProTable<API.Project>
         headerTitle={formatMessage({
-                id: 'app.project.title',
-                defaultMessage: '项目管理',
-              })}
+          id: 'app.project.title',
+          defaultMessage: '项目管理',
+        })}
         actionRef={actionRef}
         rowKey="id"
-        options={{reload: false}}
+        options={{ reload: false }}
         toolBarRender={() => [
           <Button type="primary" key="primary" onClick={showModal}>
-            <PlusOutlined /> <LocaleFormatter id="gloabal.tips.create" />
+            <PlusOutlined /> <LocaleFormatter id="global.tips.create" />
           </Button>,
         ]}
         request={undefined}
@@ -231,7 +239,7 @@ const TableList= () => {
               type="primary"
               onClick={() => {
                 // form?.submit();
-                console.log("search submit");
+                console.log('search submit');
                 setFilters(form?.getFieldsValue());
               }}
             >
@@ -252,7 +260,10 @@ const TableList= () => {
         <FooterToolbar
           extra={
             <div>
-              <LocaleFormatter id="app.project.chosen" defaultMessage="已选择" />{' '}
+              <LocaleFormatter
+                id="app.project.chosen"
+                defaultMessage="已选择"
+              />
               <a style={{ fontWeight: 600 }}>{selectedRowsState.length}</a>{' '}
               <LocaleFormatter id="app.project.item" defaultMessage="项" />
             </div>
@@ -262,11 +273,10 @@ const TableList= () => {
             onClick={async () => {
               await handleRemove(selectedRowsState);
               setSelectedRows([]);
-                  refetch();
-
+              refetch();
             }}
           >
-            <LocaleFormatter id="app.project.batchDeletion"  />
+            <LocaleFormatter id="app.project.batchDeletion" />
           </Button>
         </FooterToolbar>
       )}
