@@ -36,7 +36,7 @@ const mockMenuList = [
     ],
   },
   {
-    path: '/user',
+    path: '/setting',
     name: 'user',
     locale: 'menu.user',
     icon: 'smile',

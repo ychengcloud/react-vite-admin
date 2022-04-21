@@ -9,6 +9,8 @@ import { zhCN_guide } from './guide';
 import { zhCN_documentation } from './documentation';
 import { zhCN_menu } from './menu';
 import { zhCN_project } from './project';
+import zhCN_role from './role';
+import zhCN_user from './user';
 
 const zh_CN = {
   ...zhCN_account,
@@ -22,6 +24,8 @@ const zh_CN = {
   ...zhCN_menu,
   ...zhCN_project,
   ...zhCN_documentation,
+  ...zhCN_role,
+  ...zhCN_user,
 };
 
 export default zh_CN;

@@ -3,9 +3,11 @@ import Axios, { AxiosInstance, AxiosTransformer } from 'axios';
 import { message } from 'antd';
 import { useContext } from 'react';
 import { createBrowserHistory } from 'history';
-import { useQuery, useMutation, useQueryClient } from 'react-query';
+import { useQuery, useMutation } from 'react-query';
 import qs from 'qs';
 import { http } from '../enum/httpStatus';
+import { fm } from '../locales';
+import { Object2GetParams } from '../utils/url';
 
 const history = createBrowserHistory();
 
@@ -43,13 +45,12 @@ axios.interceptors.response.use(
   },
   (error) => {
     if (error.response && error.response.status) {
-      console.log(error.response.status);
       switch (error.response.status) {
         // 401: 未登录
         // 未登录则跳转登录页面，并携带当前页面的路径
         // 在登录成功后返回当前页面，这一步需要在登录页操作。
         case 401:
-          message.error(error.response.data);
+          message.error(error.response.data?.message || error.response.data);
           history.push('/login');
           break;
         // 403 token过期
@@ -61,13 +62,15 @@ axios.interceptors.response.use(
           break;
         // 404请求不存在
         case 404:
-          message.warning(error.response.data?.message);
+          message.error(error.response.data?.message || fm('global.404'));
           break;
-        case 406:
-          message.warning(error.response.data?.message || `请求参数有误`);
+        case 400:
+          message.error(error.response.data?.message || fm('global.400'));
           break;
         default:
-          message.warning(error.response.data?.message || `请求错误`);
+          message.error(
+            error.response.data?.message || fm('global.requestError')
+          );
       }
     }
     return Promise.reject(error);
@@ -133,65 +136,40 @@ const transformSorter = (sorter: any) => {
   return result;
 };
 
-type listParams = {
-  limit?: number;
-  offset?: number;
-  filter?: string[];
-  order?: string;
-};
-const useGetList = <T>(
-  key: string,
-  url: string,
-  pagination?: any,
-  filters?: any,
-  sorter?: any
-) => {
+const useGetList = <T>(key: string, url: string, params?: any) => {
   const axios = useAxios();
   const service = async () => {
-    let params: listParams = {};
-
-    params = { ...transformPagination(pagination) };
-    if (filters) {
-      params.filter = transformFilters(filters);
-    }
-    if (sorter) {
-      params.order = transformSorter(sorter);
-    }
-    const transformRequest: AxiosTransformer = (data, headers) => {};
     const data: T = await axios.post(`${url}`, {
       params,
       paramsSerializer: (params: any) => {
         return qs.stringify(params, { arrayFormat: 'repeat' });
       },
-      transformRequest,
     });
-
     return data;
   };
   return useQuery(key, () => service());
 };
 
-const useGetOne = <T>(key: string, url: string, params?: any) => {
+const useGetWithParams = <T, P>(key: string, url: string, params?: T) => {
   const axios = useAxios();
   const service = async () => {
-    const data: T = await axios.get(`${url}`, params);
+    const data: P = await axios.get(`${url}`, { params });
     return data;
   };
-
   return useQuery(key, () => service());
 };
 
-const useGet = <T, U>(url: string) => {
+const useGet = <T>(key: string, url: string) => {
   const axios = useAxios();
-  return useMutation(async () => {
-    const data: U = await axios.get(`${url}`);
+  const service = async () => {
+    const data: T = await axios.get(`${url}`);
     return data;
-  });
+  };
+  return useQuery(key, () => service());
 };
 
 const useCreate = <T, U>(url: string) => {
   const axios = useAxios();
-  const queryClient = useQueryClient();
   return useMutation(async (params: T) => {
     const data: U = await axios.post(`${url}`, params);
     return data;
@@ -200,39 +178,56 @@ const useCreate = <T, U>(url: string) => {
 
 const useUpdate = <T>(url: string) => {
   const axios = useAxios();
-  const queryClient = useQueryClient();
   return useMutation(async (item: T) => {
-    const data: T = await axios.patch(`${url}`, item);
+    const data: T = await axios.post(`${url}`, item);
     return data;
   });
 };
 
 const useDelete = <T>(url: string) => {
   const axios = useAxios();
-  const queryClient = useQueryClient();
-  return useMutation(async (id: number) => {
-    const data: T = await axios.delete(`${url}?id=${id}`);
+  return useMutation(async (params: Object) => {
+    const data: T = await axios.delete(`${url}${Object2GetParams(params)}`);
     return data;
   });
 };
 
 const useBatch = (url: string) => {
   const axios = useAxios();
-  const queryClient = useQueryClient();
   return useMutation(async (ids: number[]) => {
     const data = await axios.post(`${url}`, { idList: ids });
     return data;
   });
 };
 
+const useTableRequest = (url: string) => {
+  return async (params: Object, sort: any) => {
+    const keys = Object.keys(sort);
+    if (keys.length) {
+      params = {
+        ...params,
+        order_by: keys[0],
+        order_type: sort[keys[0]] === 'ascend' ? 'ASC' : 'DESC',
+      };
+    }
+    const result: any = await axios.post(url, params);
+    return {
+      data: result.data,
+      success: true,
+      total: result.total,
+    };
+  };
+};
+
 export {
-  useGetOne,
+  useGetWithParams,
   useGetList,
   useUpdate,
   useCreate,
   useDelete,
   useBatch,
   useGet,
+  useTableRequest,
 };
 
 export default axios;

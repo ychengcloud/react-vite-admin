@@ -10,11 +10,11 @@ import { ReactComponent as LogoSvg } from '@/assets/logo/logo.svg';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { setLogged } from '../../stores/user';
+import { ILoginResult } from '../../api/type/login';
 
 const initialValues: LoginParams = {
-  user_name: 'guest',
-  user_password: 'guest',
-  // remember: true
+  user_name: 'admin',
+  user_password: 'admin',
 };
 
 const LoginForm: FC = () => {
@@ -24,8 +24,8 @@ const LoginForm: FC = () => {
   const location = useLocation();
 
   const onFinished = async (form: LoginParams) => {
-    const result = await loginMutation.mutateAsync(form);
-    if (result.statue === http.statusOK) {
+    const result: ILoginResult = await loginMutation.mutateAsync(form);
+    if (result) {
       localStorage.setItem('token', result.data.token ?? '');
       localStorage.setItem('username', form.user_name);
       dispatch(setLogged(true));
@@ -33,8 +33,6 @@ const LoginForm: FC = () => {
         pathname: '/user',
       };
       navigate(from);
-    } else {
-      message.error(result.errorMessage);
     }
   };
 

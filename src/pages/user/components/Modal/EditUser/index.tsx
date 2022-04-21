@@ -2,7 +2,7 @@ import { message } from 'antd';
 import React, { useEffect, useRef } from 'react';
 import { useCreate } from '../../../../../api/request';
 import { http } from '../../../../../enum/httpStatus';
-import { IUser } from '../../../tableHeader';
+import { fm } from '../../../../../locales';
 import useModalState from '../AddUser/index.hooks';
 import BaseForm from '../BaseForm';
 
@@ -21,8 +21,8 @@ const EditUser = () => {
           ...values,
           id: tableSelectData.id,
         });
-        if (res.statue === http.statusOK) {
-          message.success('更新成功');
+        if (res) {
+          message.success(fm('global.tips.updateSuccess'));
           setModalStatus(false);
           formRef.current?.resetFields();
           refreshTable();
@@ -43,7 +43,7 @@ const EditUser = () => {
   return (
     <>
       <BaseForm
-        title="编辑用户"
+        title={fm('global.tips.edit')}
         visible={visible}
         setClose={setClose}
         formRef={formRef}

@@ -9,6 +9,7 @@ import useModalState from './components/Modal/AddUser/index.hooks';
 import { useDelete } from '../../api/request';
 import UserModal from './components/Modal';
 import { EDIT_USER } from './components/Modal/EditUser';
+import { fm } from '../../locales';
 const User = () => {
   const { refresh, setModalStatus, setSelectTableData } =
     useModalState('add_user');
@@ -16,9 +17,7 @@ const User = () => {
   const actionRef = useRef<ActionType>();
   const mutation = useDelete('v1/user/delete');
   const getTableData = async (params: any, sort: any, filter: any) => {
-    console.log(sort, filter, params, '9999');
     const keys = Object.keys(sort);
-    console.log(keys);
     if (keys.length) {
       params = {
         ...params,
@@ -27,10 +26,9 @@ const User = () => {
       };
     }
     const result: any = await axios.post('/v1/user/list', params);
-    console.log(result);
     return {
       data: result.data,
-      success: result.statue === http.statusOK,
+      success: true,
       total: result.total,
     };
   };
@@ -48,13 +46,12 @@ const User = () => {
 
   const deleteUser = async (record: any) => {
     const res: any = await mutation.mutateAsync(record.id);
-    if (res.statue === http.statusOK) {
-      message.success('删除成功');
+    if (res) {
+      message.success(fm('global.tips.deleteSuccess'));
     }
     refreshTableFun();
   };
   const editUser = (record: IUser) => {
-    console.log(record);
     setEditUserModalStatus(true);
     setSelectTableData(record);
   };
@@ -65,7 +62,7 @@ const User = () => {
         columns={tableHeaderColumns(editUser, deleteUser)}
         request={getTableData}
         actionRef={actionRef}
-        headerTitle={'用户列表'}
+        headerTitle={fm('user.userList')}
         toolBarRender={() => [
           <Button
             key="addUserButton"
@@ -73,7 +70,7 @@ const User = () => {
             type="primary"
             onClick={openModal}
           >
-            新建
+            {fm('global.tips.create')}
           </Button>,
         ]}
       />

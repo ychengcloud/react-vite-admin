@@ -9,9 +9,8 @@ import ProForm, {
 import React from 'react';
 import { emailValidate } from '../../../../../utils/form';
 import { IBaseForm } from './index.d';
-import { useGetOne } from '../../../../../api/request';
-import { RequestOptionsType } from '@ant-design/pro-utils';
 import { useAxios } from '../../../../../api/request';
+import { fm } from '../../../../../locales';
 
 const BaseForm: React.FC<IBaseForm> = (props) => {
   const axios = useAxios();
@@ -33,14 +32,19 @@ const BaseForm: React.FC<IBaseForm> = (props) => {
         <ProFormText
           width="sm"
           name="user_name"
-          label="用户名"
-          placeholder="请输入名称"
-          rules={[{ required: true, message: '请填写名称' }]}
+          label={fm('user.userName')}
+          placeholder={fm('global.placeholderInp') + fm('user.userName')}
+          rules={[
+            {
+              required: true,
+              message: fm('global.placeholderWri') + fm('user.userName'),
+            },
+          ]}
         />
         <ProFormSelect
           name="sex"
           width="sm"
-          label="性别"
+          label={fm('user.sex')}
           options={[
             {
               label: '女',
@@ -55,32 +59,37 @@ const BaseForm: React.FC<IBaseForm> = (props) => {
         <ProFormSelect
           name="role"
           width="sm"
-          label="角色"
-          rules={[{ required: true, message: '请选择角色' }]}
+          label={fm('user.role')}
+          rules={[
+            {
+              required: true,
+              message: fm('global.placeholderSel') + fm('user.role'),
+            },
+          ]}
           request={getRoleOptions}
         />
         <ProFormDatePicker
           width="sm"
           name="birthday"
-          label="出生年月"
-          placeholder="请选择"
+          label={fm('user.birthday')}
+          placeholder={fm('global.placeholderSel')}
         />
         <ProFormText
           width="sm"
           name="phone"
-          label="联系方式"
-          placeholder="请输入联系方式"
+          label={fm('user.phone')}
+          placeholder={fm('global.placeholderWri') + fm('user.phone')}
         />
         <ProFormText
           width="sm"
           name="email"
-          label="邮箱"
-          placeholder="请输入邮箱"
+          label={fm('user.email')}
+          placeholder={fm('global.placeholderWri') + fm('user.phone')}
           rules={[emailValidate]}
           validateTrigger="onChange"
         />
         <ProFormDigit
-          label="可借书数量"
+          label={fm('user.borrow_book_count')}
           name="borrow_book_count"
           min={0}
           max={5}
@@ -89,8 +98,8 @@ const BaseForm: React.FC<IBaseForm> = (props) => {
         <ProFormTextArea
           width="lg"
           name="remake"
-          label="备注"
-          placeholder="请输入备注"
+          label={fm('user.remake')}
+          placeholder={fm('global.placeholderWri') + fm('user.remake')}
         />
       </ProForm.Group>
     </ModalForm>

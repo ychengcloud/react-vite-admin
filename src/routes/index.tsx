@@ -6,7 +6,7 @@ import LayoutPage from '@/pages/layout';
 import User from '../pages/user';
 import WrapperRouteComponent from './config';
 import { useRoutes, RouteObject } from 'react-router-dom';
-
+import Role from '@/pages/role';
 const NotFound = lazy(() => import('@/pages/404'));
 const Project = lazy(() => import('@/pages/project'));
 
@@ -40,6 +40,14 @@ const routeList: RouteObject[] = [
         element: (
           <WrapperRouteComponent>
             <User />
+          </WrapperRouteComponent>
+        ),
+      },
+      {
+        path: '/role',
+        element: (
+          <WrapperRouteComponent>
+            <Role />
           </WrapperRouteComponent>
         ),
       },

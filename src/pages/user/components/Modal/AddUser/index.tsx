@@ -4,6 +4,7 @@ import useModalState from './index.hooks';
 import { message } from 'antd';
 import { http } from '../../../../../enum/httpStatus';
 import BaseForm from '../BaseForm';
+import { fm } from '../../../../../locales';
 const AddUser = () => {
   const formRef = useRef<any>();
 
@@ -17,7 +18,7 @@ const AddUser = () => {
         console.log(values);
         const res: any = await mutation.mutateAsync(values);
         if (res.statue === http.statusOK) {
-          message.success('添加成功');
+          message.success(fm('global.tips.addSuccess'));
           setModalStatus(false);
           formRef.current?.resetFields();
           refreshTable();
@@ -29,7 +30,7 @@ const AddUser = () => {
   return (
     <>
       <BaseForm
-        title="新建用户"
+        title={fm('global.tips.create')}
         visible={visible}
         setClose={() => setModalStatus(false)}
         formRef={formRef}

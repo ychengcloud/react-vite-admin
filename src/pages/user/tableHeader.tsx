@@ -2,7 +2,7 @@ import type { ProColumns, ActionType } from '@ant-design/pro-table';
 import { Button, Popconfirm } from 'antd';
 import React from 'react';
 import { ReactNode } from 'react';
-
+import { fm } from '../../locales';
 export interface IUser {
   [key: string]: any;
 }
@@ -18,7 +18,7 @@ export const tableHeaderColumns = (
       width: 48,
     },
     {
-      title: '用户名',
+      title: fm('user.userName'),
       dataIndex: 'user_name',
       ellipsis: true,
       tip: '用户名过长会自动收缩',
@@ -32,11 +32,11 @@ export const tableHeaderColumns = (
       },
     },
     {
-      title: '角色',
+      title: fm('user.role'),
       dataIndex: 'roleName',
     },
     {
-      title: '性别',
+      title: fm('user.sex'),
       dataIndex: 'sex',
       search: false,
       renderText: (text: ReactNode) => {
@@ -47,33 +47,33 @@ export const tableHeaderColumns = (
       },
     },
     {
-      title: '出身年月',
+      title: fm('user.birthday'),
       dataIndex: 'birthday',
       search: false,
     },
     {
-      title: '可借书数量',
+      title: fm('user.borrow_book_count'),
       dataIndex: 'borrow_book_count',
       sorter: true,
     },
     {
-      title: '联系方式',
+      title: fm('user.phone'),
       dataIndex: 'phone',
       search: false,
       sorter: true,
     },
     {
-      title: '邮箱',
+      title: fm('user.email'),
       dataIndex: 'email',
       search: false,
     },
     {
-      title: '简介',
+      title: fm('user.remake'),
       dataIndex: 'remake',
       search: false,
     },
     {
-      title: '操作',
+      title: fm('global.tips.operation'),
       width: 180,
       key: 'option',
       valueType: 'option',
@@ -84,17 +84,17 @@ export const tableHeaderColumns = (
           onClick={() => edit(record)}
           disabled={record.id === 1}
         >
-          编辑
+          {fm('global.tips.edit')}
         </Button>,
         <Popconfirm
-          title="确定删除?"
+          title={fm('global.tips.deleteConfirm')}
           onConfirm={() => {
             deleteUser(record);
           }}
           disabled={record.id === 1}
         >
           <Button type="text" danger key="link2" disabled={record.id === 1}>
-            删除
+            {fm('global.tips.delete')}
           </Button>
         </Popconfirm>,
       ],
