@@ -10,7 +10,7 @@ import { findDOMNode } from "react-dom";
 import OperationModal from "./components/OperationModal";
 import { useAddProject, useBatchDeleteProject, useGetProjects, useUpdateProject } from "@/api";
 
-const TableList= () => {
+const TableList = () => {
   const { formatMessage } = useLocale();
 
   const addBtn = useRef(null);
@@ -50,7 +50,7 @@ const TableList= () => {
 
   useEffect(() => {
     refetch();
-}, [pagination.current, pagination.pageSize, filters]);
+  }, [pagination.current, pagination.pageSize, filters]);
 
   const showModal = () => {
     setVisible(true);
@@ -123,7 +123,7 @@ const TableList= () => {
     if (!selectedRows) return true;
     try {
       await batchDelete(selectedRows.map((row) => row.id));
-      setPagination({...pagination, current: 1});
+      setPagination({ ...pagination, current: 1 });
       hide();
       message.success("删除成功，即将刷新");
       return true;
@@ -158,6 +158,13 @@ const TableList= () => {
       dataIndex: "description",
       valueType: "textarea",
       sorter: true,
+    },
+    {
+      title: formatMessage({ id: "app.project.updateAt" }),
+      dataIndex: 'updatedAt',
+      sorter: true,
+      valueType: 'dateTime',
+      hideInForm: true,
     },
     {
       title: formatMessage({ id: "gloabal.tips.operation" }),
@@ -200,12 +207,12 @@ const TableList= () => {
     <PageContainer>
       <ProTable<API.Project>
         headerTitle={formatMessage({
-                id: 'app.project.title',
-                defaultMessage: '项目管理',
-              })}
+          id: 'app.project.title',
+          defaultMessage: '项目管理',
+        })}
         actionRef={actionRef}
         rowKey="id"
-        options={{reload: false}}
+        options={{ reload: false }}
         toolBarRender={() => [
           <Button type="primary" key="primary" onClick={showModal}>
             <PlusOutlined /> <LocaleFormatter id="gloabal.tips.create" />
@@ -262,11 +269,11 @@ const TableList= () => {
             onClick={async () => {
               await handleRemove(selectedRowsState);
               setSelectedRows([]);
-                  refetch();
+              refetch();
 
             }}
           >
-            <LocaleFormatter id="app.project.batchDeletion"  />
+            <LocaleFormatter id="app.project.batchDeletion" />
           </Button>
         </FooterToolbar>
       )}
